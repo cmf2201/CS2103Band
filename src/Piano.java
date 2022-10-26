@@ -83,45 +83,66 @@ public class Piano extends JPanel {
 	 */
 	private void makeKeys () {
 		int keyDrawPos = 0;
+		Polygon polygon;
 		for(int currentKey = 0; keyDrawPos < 860; currentKey++) {
-			if(true){ //isBlackKey(currentKey)){
-				int[] xCoords = new int[] {
-						keyDrawPos - (BLACK_KEY_WIDTH/2),
-						keyDrawPos - (BLACK_KEY_WIDTH/2),
-						keyDrawPos + (BLACK_KEY_WIDTH/2),
-						keyDrawPos + (BLACK_KEY_WIDTH/2)
+			if (true) { //isBlackKey(currentKey)){
+				int[] xCoords = new int[]{
+						keyDrawPos - (BLACK_KEY_WIDTH / 2),
+						keyDrawPos - (BLACK_KEY_WIDTH / 2),
+						keyDrawPos + (BLACK_KEY_WIDTH / 2),
+						keyDrawPos + (BLACK_KEY_WIDTH / 2)
 				};
-				int[] yCoords = new int[] {
+				int[] yCoords = new int[]{
 						0,
 						BLACK_KEY_HEIGHT,
 						BLACK_KEY_HEIGHT,
 						0
 				};
 				keyDrawPos += WHITE_KEY_WIDTH;
-			}
-			else { // TODO: Fix coordinate order so new array can easily be made for white notes
-				int[] intitalXCoords = new int[] {
-						keyDrawPos,
-						keyDrawPos + WHITE_KEY_WIDTH
-				};
-				int[] initalYCoords = new int[] {
-						WHITE_KEY_HEIGHT,
-						WHITE_KEY_HEIGHT
-				};
-				int[]
-				if(isBlackKey((currentKey + 11)%12)){
-					intitalXCoords = Arrays.copyOf()
+				polygon = new Polygon(xCoords, yCoords, xCoords.length);
+			} else { // TODO: Fix coordinate order so new array can easily be made for white notes
+				int[] xCoords = new int[8];
+				int[] yCoords = new int[8];
+				int numOfCoordinates = 4;
+
+				xCoords[0] = keyDrawPos;
+				xCoords[1] = keyDrawPos + WHITE_KEY_WIDTH;
+
+				yCoords[0] = WHITE_KEY_HEIGHT;
+				yCoords[1] = WHITE_KEY_HEIGHT;
+
+				if (isBlackKey((currentKey + 1) % 12)) {
+					xCoords[2] = keyDrawPos + WHITE_KEY_WIDTH;
+					xCoords[3] = keyDrawPos + WHITE_KEY_WIDTH - BLACK_KEY_WIDTH / 2;
+					xCoords[4] = keyDrawPos + WHITE_KEY_WIDTH - BLACK_KEY_WIDTH / 2;
+					numOfCoordinates = numOfCoordinates + 2;
+				} else {
+					xCoords[2] = keyDrawPos + WHITE_KEY_WIDTH;
 				}
+				if (isBlackKey((currentKey + 11) % 12)) {
+					xCoords[3 + (numOfCoordinates - 4)] = keyDrawPos + BLACK_KEY_WIDTH / 2;
+					xCoords[4 + (numOfCoordinates - 4)] = keyDrawPos + BLACK_KEY_WIDTH / 2;
+					xCoords[5 + (numOfCoordinates - 4)] = keyDrawPos;
+
+					yCoords[3 + (numOfCoordinates - 4)] = keyDrawPos + BLACK_KEY_WIDTH / 2;
+					yCoords[4 + (numOfCoordinates - 4)] = keyDrawPos + BLACK_KEY_WIDTH / 2;
+					yCoords[5 + (numOfCoordinates - 4)] = keyDrawPos;
+
+					numOfCoordinates = numOfCoordinates + 2;
+				} else {
+					xCoords[3 + (numOfCoordinates - 4)] = keyDrawPos;
+				}
+
+
+				polygon = new Polygon(Arrays.copyOf(xCoords, numOfCoordinates), Arrays.copyOf(yCoords, numOfCoordinates), numOfCoordinates);
 				keyDrawPos += WHITE_KEY_WIDTH;
 			}
+			// Just as an example, this draws the left-most black key at its proper position.
+			Key key = new Key(polygon, START_PITCH, this);
+
+			// Add this key to the list of keys so that it gets painted.
+			_keys.add(key);
 		}
-		// Just as an example, this draws the left-most black key at its proper position.
-
-		Polygon polygon = new Polygon(xCoords, yCoords, xCoords.length);
-		Key key = new Key(polygon, START_PITCH, this);
-
-		// Add this key to the list of keys so that it gets painted.
-		_keys.add(key);
 	}
 
 	/**
