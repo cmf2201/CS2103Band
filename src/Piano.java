@@ -82,14 +82,14 @@ public class Piano extends JPanel {
 	 * add them to the _keys array.
 	 */
 	private void makeKeys () {
-		int KeyDrawPos = 0;
-		for(int currentKey = 0; currentKey < NUM_KEYS; currentKey++) {
-			if(isBlackKey(currentKey)){
+		int keyDrawPos = 0;
+		for(int currentKey = 0; keyDrawPos < 860; currentKey++) {
+			if(true){ //isBlackKey(currentKey)){
 				int[] xCoords = new int[] {
-						KeyDrawPos - (BLACK_KEY_WIDTH/2),
-						KeyDrawPos - (BLACK_KEY_WIDTH/2),
-						KeyDrawPos + (BLACK_KEY_WIDTH/2),
-						KeyDrawPos + (BLACK_KEY_WIDTH/2)
+						keyDrawPos - (BLACK_KEY_WIDTH/2),
+						keyDrawPos - (BLACK_KEY_WIDTH/2),
+						keyDrawPos + (BLACK_KEY_WIDTH/2),
+						keyDrawPos + (BLACK_KEY_WIDTH/2)
 				};
 				int[] yCoords = new int[] {
 						0,
@@ -97,36 +97,26 @@ public class Piano extends JPanel {
 						BLACK_KEY_HEIGHT,
 						0
 				};
+				keyDrawPos += WHITE_KEY_WIDTH;
 			}
 			else { // TODO: Fix coordinate order so new array can easily be made for white notes
-				int[] xCoords = new int[] {
-						0,
-						0,
-						KeyDrawPos + (BLACK_KEY_WIDTH/2),
-						KeyDrawPos + (BLACK_KEY_WIDTH/2)
+				int[] intitalXCoords = new int[] {
+						keyDrawPos,
+						keyDrawPos + WHITE_KEY_WIDTH
 				};
-				int[] yCoords = new int[] {
-						0,
-						BLACK_KEY_HEIGHT,
-						BLACK_KEY_HEIGHT,
-						0
+				int[] initalYCoords = new int[] {
+						WHITE_KEY_HEIGHT,
+						WHITE_KEY_HEIGHT
 				};
-				KeyDrawPos += WHITE_KEY_WIDTH;
+				int[]
+				if(isBlackKey((currentKey + 11)%12)){
+					intitalXCoords = Arrays.copyOf()
+				}
+				keyDrawPos += WHITE_KEY_WIDTH;
 			}
 		}
 		// Just as an example, this draws the left-most black key at its proper position.
-		int[] xCoords = new int[] {
-			WHITE_KEY_WIDTH - BLACK_KEY_WIDTH/2,
-			WHITE_KEY_WIDTH + BLACK_KEY_WIDTH/2,
-			WHITE_KEY_WIDTH + BLACK_KEY_WIDTH/2,
-			WHITE_KEY_WIDTH - BLACK_KEY_WIDTH/2
-		};
-		int[] yCoords = new int[] {
-			0,
-			0,
-			BLACK_KEY_HEIGHT,
-			BLACK_KEY_HEIGHT
-		};
+
 		Polygon polygon = new Polygon(xCoords, yCoords, xCoords.length);
 		Key key = new Key(polygon, START_PITCH, this);
 
