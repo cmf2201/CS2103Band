@@ -43,14 +43,14 @@ public class ControlPanel extends JPanel {
 
 	/**
 	 * Sets the local receiver to the specified value.
-	 * @param the local receiver 
+	 * @param receiver the local receiver
 	 */
 	public void setReceiver (Receiver receiver) {
 		_receiver = receiver;
 	}
 
 	/**
-	 * @param the local receiver.
+	 * @param receiver the local receiver.
 	 */
 
 	public ControlPanel (Receiver receiver) {

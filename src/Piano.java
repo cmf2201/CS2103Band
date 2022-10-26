@@ -17,12 +17,15 @@ public class Piano extends JPanel {
 	public static int NUM_WHITE_KEYS_PER_OCTAVE = 7;
 	public static int NUM_OCTAVES = 3;
 	public static int NUM_WHITE_KEYS = NUM_WHITE_KEYS_PER_OCTAVE * NUM_OCTAVES;
+	public static int NUM_KEYS = 36;
 	public static int WIDTH = NUM_WHITE_KEYS * WHITE_KEY_WIDTH;
 	public static int HEIGHT = WHITE_KEY_HEIGHT;
+	public static int[] BLACK_KEYS = {1,3,6,8,10};
 		
 	private java.util.List<Key> _keys = new ArrayList<>();
 	private Receiver _receiver;
 	private PianoMouseListener _mouseListener;
+
 
 	/**
 	 * Returns the list of keys in the piano.
@@ -79,6 +82,38 @@ public class Piano extends JPanel {
 	 * add them to the _keys array.
 	 */
 	private void makeKeys () {
+		int KeyDrawPos = 0;
+		for(int currentKey = 0; currentKey < NUM_KEYS; currentKey++) {
+			if(isBlackKey(currentKey)){
+				int[] xCoords = new int[] {
+						KeyDrawPos - (BLACK_KEY_WIDTH/2),
+						KeyDrawPos - (BLACK_KEY_WIDTH/2),
+						KeyDrawPos + (BLACK_KEY_WIDTH/2),
+						KeyDrawPos + (BLACK_KEY_WIDTH/2)
+				};
+				int[] yCoords = new int[] {
+						0,
+						BLACK_KEY_HEIGHT,
+						BLACK_KEY_HEIGHT,
+						0
+				};
+			}
+			else { // TODO: Fix coordinate order so new array can easily be made for white notes
+				int[] xCoords = new int[] {
+						0,
+						0,
+						KeyDrawPos + (BLACK_KEY_WIDTH/2),
+						KeyDrawPos + (BLACK_KEY_WIDTH/2)
+				};
+				int[] yCoords = new int[] {
+						0,
+						BLACK_KEY_HEIGHT,
+						BLACK_KEY_HEIGHT,
+						0
+				};
+				KeyDrawPos += WHITE_KEY_WIDTH;
+			}
+		}
 		// Just as an example, this draws the left-most black key at its proper position.
 		int[] xCoords = new int[] {
 			WHITE_KEY_WIDTH - BLACK_KEY_WIDTH/2,
@@ -97,6 +132,20 @@ public class Piano extends JPanel {
 
 		// Add this key to the list of keys so that it gets painted.
 		_keys.add(key);
+	}
+
+	/**
+	 * returns true if the given key number corresponds to a black key, false otherwise
+	 * @param key The number of the key being checked
+	 */
+	public boolean isBlackKey(int key) {
+		key = key % 12;
+		for (int blackKey : BLACK_KEYS) {
+			if (key == blackKey) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// DO NOT MODIFY THIS METHOD.
